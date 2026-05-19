@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using PersonalAccount.Data;
 using PersonalAccount.Models.Student;
 using PersonalAccount.Repository;
 using PersonalAccount.Services.Auth;
@@ -11,6 +13,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options => { });
 builder.Services.AddAuthorization();
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(
+    builder.Configuration.GetConnectionString("SqliteDefaultConnection")));
 
 // Services
 builder.Services.AddScoped<IStudentAuthService, StudentAuthService>();
