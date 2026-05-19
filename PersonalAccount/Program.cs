@@ -1,4 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using PersonalAccount.Models.Student;
+using PersonalAccount.Repository;
+using PersonalAccount.Services.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +11,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options => { });
 builder.Services.AddAuthorization();
+
+// Services
+builder.Services.AddScoped<IStudentAuthService, StudentAuthService>();
+
+// Repositories
+builder.Services.AddScoped<IStudentRepo<StudentAuthModel>, StudentRepo<StudentAuthModel>>();
+
+// Others
+builder.Services.AddScoped<IPasswordHasher<StudentAuthModel>, PasswordHasher<StudentAuthModel>>();
 
 var app = builder.Build();
 

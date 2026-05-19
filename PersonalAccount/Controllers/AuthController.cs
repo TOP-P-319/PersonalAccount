@@ -6,17 +6,27 @@ namespace PersonalAccount.Controllers;
 
 public class AuthController(IStudentAuthService auth) : Controller
 {
+    [HttpGet]
+    public IActionResult Login(string? returnUrl = null)
+    {
+        return View(new LoginViewModel
+        {
+            ReturnUrl = returnUrl
+        });
+    }
+
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
-        // TODO: validate model
+        if (!ModelState.IsValid) return View(model);
         
         var student = await auth.ValidateStudentAsync(model.Email, model.Password);
         if (student == null)
         {
-            // TODO: return invalid state
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return View(model);
         }
-        
+
         return Redirect("/");
-    } 
+    }
 }
