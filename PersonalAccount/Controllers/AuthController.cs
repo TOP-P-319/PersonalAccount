@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PersonalAccount.Models;
 using PersonalAccount.Services.Auth;
 
@@ -16,10 +17,11 @@ public class AuthController(IStudentAuthService auth) : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         if (!ModelState.IsValid) return View(model);
-        
+
         var student = await auth.ValidateStudentAsync(model.Email, model.Password);
         if (student == null)
         {
@@ -27,6 +29,16 @@ public class AuthController(IStudentAuthService auth) : Controller
             return View(model);
         }
 
-        return Redirect("/");
+        await auth.SignInAsync(HttpContext, student);
+        return Redirect(model.ReturnUrl ?? "/");
+    }
+
+    [HttpPost]
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
+    {
+        await auth.SignOutAsync(HttpContext);
+        return RedirectToAction("Index", "Home");
     }
 }

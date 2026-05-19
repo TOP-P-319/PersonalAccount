@@ -18,4 +18,10 @@ public class StudentRepo<T>(AppDbContext ctx, IMapper<StudentEntity, T> mapper) 
         
         return entity == null ? null : mapper.ToModel(entity);
     }
+
+    public async Task<T?> GetByIdAsync(int id)
+    {
+        var entity = await Students.FindAsync(id);
+        return entity == null ? null : mapper.ToModel(entity);
+    }
 }

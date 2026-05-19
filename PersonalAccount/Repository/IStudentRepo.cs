@@ -5,4 +5,5 @@ namespace PersonalAccount.Repository;
 public interface IStudentRepo<T> where T : StudentModel
 {
     Task<T?> GetByEmailAsync(string email);
+    Task<T?> GetByIdAsync(int id);
 }
