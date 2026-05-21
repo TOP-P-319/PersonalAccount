@@ -1,11 +1,27 @@
+using Microsoft.EntityFrameworkCore;
+using PersonalAccount.Data;
+using PersonalAccount.Data.Entities;
+using PersonalAccount.Mappers;
 using PersonalAccount.Models.Student;
 
 namespace PersonalAccount.Repository;
 
-public class StudentRepo<T> : IStudentRepo<T> where T : StudentModel
+public class StudentRepo<T>(AppDbContext ctx, IMapper<StudentEntity, T> mapper) : IStudentRepo<T> where T : StudentModel
 {
+    private DbSet<StudentEntity> Students => ctx.Students;
+
     public async Task<T?> GetByEmailAsync(string email)
     {
-        return null;
+        var entity = await Students
+            .AsNoTracking()
+            .FirstOrDefaultAsync(entity => entity.Email == email);
+        
+        return entity == null ? null : mapper.ToModel(entity);
+    }
+
+    public async Task<T?> GetByIdAsync(int id)
+    {
+        var entity = await Students.FindAsync(id);
+        return entity == null ? null : mapper.ToModel(entity);
     }
 }

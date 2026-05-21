@@ -1,0 +1,35 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<div class="container d-flex align-content-center justify-content-center">
+    <div class="card w-50">
+        <header class="card-header">
+            <h1 class="text-center">
+                Личный кабинет
+            </h1>
+        </header>
+        <form class="card-body" method="post" asp-controller="Auth" asp-action="Login">
+            <p class="text-center">Войдите под своей учетной записью</p>
+            
+            <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+            
+            <div class="mb-3">
+                <label class="form-label" asp-for="Email"></label>
+                <input class="form-control" asp-for="Email" autocomplete="off"/>
+                <span class="text-danger small" asp-validation-for="Email"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" asp-for="Password"></label>
+                <input class="form-control" asp-for="Password"/>
+                <span class="text-danger small" asp-validation-for="Password"></span>
+            </div>
+            
+            <input type="hidden" asp-for="ReturnUrl"/>
+            <button class="btn btn-primary w-100"  type="submit">Войти</button>
+        </form>
+    </div>
+</div>
