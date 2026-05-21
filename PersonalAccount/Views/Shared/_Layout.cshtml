@@ -34,16 +34,16 @@
                         @if (isAuthenticated)
                         {
                             <div class="d-flex">
-                                <a class="nav-link text-primary" asp-area="" asp-controller="Account"
+                                <a class="nav-link text-primary" asp-area="" asp-controller="Profile"
                                    asp-action="Index"><i class="bi bi-person-circle"></i> Личный кабинет</a>
-                                <form method="post" asp-controller="Auth" asp-action="Logout">
+                                <form method="post" asp-controller="Account" asp-action="Logout">
                                     <button class="btn btn-link nav-link text-danger" type="submit">Выйти <i class="bi bi-box-arrow-right"></i> </button>
                                 </form>
                             </div>
                         }
                         else
                         {
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account"
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Profile"
                                asp-action="Index"><i class="bi bi-person-circle"></i> Войти</a>
                         }
                     </li>

@@ -1,6 +1,6 @@
 ﻿using PersonalAccount.Models.Student;
 
-namespace PersonalAccount.Services.Auth;
+namespace PersonalAccount.Services.Account;
 
 public interface IStudentAuthService
 {

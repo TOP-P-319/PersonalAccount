@@ -16,7 +16,10 @@
             
             <main class="card-body">
                 <p class="text-start fw-bold">@Model.GroupName</p>
-                <p class="text-start text-primary">@Model.Email</p>
+                <form class="d-flex gap-2" method="post" asp-action="Send" asp-controller="EmailConfirmation">
+                    <sapn class="text-start text-primary nav-link" href="@Model.Email">@Model.Email</sapn>
+                    <button class="btn btn-link nav-link text-danger" type="submit">Подтвердить</button>
+                </form>
             </main>
             <footer class="card-footer">
                 <p class="text-end">ID: @Model.Id</p>

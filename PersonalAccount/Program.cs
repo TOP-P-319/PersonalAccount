@@ -7,8 +7,9 @@ using PersonalAccount.Mappers;
 using PersonalAccount.Models.Student;
 using PersonalAccount.Repository;
 using PersonalAccount.Services.Account;
-using PersonalAccount.Services.Auth;
+using PersonalAccount.Services.Profile;
 using PersonalAccount.Services.Bootstrap;
+using PersonalAccount.Services.Smtp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Auth/Login";
+        options.LoginPath = "/Account/Login";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
         options.SlidingExpiration = true;
     });
@@ -26,9 +27,13 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(
     builder.Configuration.GetConnectionString("SqliteDefaultConnection"))
 );
 
+// Options
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"));
+
 // Services
 builder.Services.AddScoped<IStudentAuthService, StudentAuthService>();
-builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IStudentProfileService, StudentProfileService>();
+builder.Services.AddScoped<ISmtpClientService, SmtpClientService>();
 if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<DbBootstrap>();
 

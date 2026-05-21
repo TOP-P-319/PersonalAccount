@@ -1,20 +1,44 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PersonalAccount.Models;
 using PersonalAccount.Services.Account;
-using PersonalAccount.Utils;
 
 namespace PersonalAccount.Controllers;
 
-[Authorize]
-public class AccountController(IStudentService students) : Controller
+public class AccountController(IStudentAuthService auth) : Controller
 {
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public IActionResult Login(string? returnUrl = null)
     {
-        var studentId = User.GetId();
-        if (studentId == null) return RedirectToAction("Error", "Home");
-        var student = await students.GetByIdAsync(studentId.Value);
-        
-        return View(student);
+        return View(new LoginViewModel
+        {
+            ReturnUrl = returnUrl
+        });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Login(LoginViewModel model)
+    {
+        if (!ModelState.IsValid) return View(model);
+
+        var student = await auth.ValidateStudentAsync(model.Email, model.Password);
+        if (student == null)
+        {
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return View(model);
+        }
+
+        await auth.SignInAsync(HttpContext, student);
+        return Redirect(model.ReturnUrl ?? "/");
+    }
+
+    [HttpPost]
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
+    {
+        await auth.SignOutAsync(HttpContext);
+        return RedirectToAction("Index", "Home");
     }
 }
