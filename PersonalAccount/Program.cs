@@ -4,12 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using PersonalAccount.Data;
 using PersonalAccount.Data.Entities;
 using PersonalAccount.Mappers;
+using PersonalAccount.Models;
 using PersonalAccount.Models.Student;
 using PersonalAccount.Repository;
 using PersonalAccount.Services.Account;
 using PersonalAccount.Services.Profile;
 using PersonalAccount.Services.Bootstrap;
 using PersonalAccount.Services.Smtp;
+using PersonalAccount.Services.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,16 +36,19 @@ builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"
 builder.Services.AddScoped<IStudentAuthService, StudentAuthService>();
 builder.Services.AddScoped<IStudentProfileService, StudentProfileService>();
 builder.Services.AddScoped<ISmtpClientService, SmtpClientService>();
+builder.Services.AddScoped<IConfirmationTokenService, ConfirmationTokenService>();
 if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<DbBootstrap>();
 
 // Repositories
 builder.Services.AddScoped<IStudentRepo<StudentAuthModel>, StudentRepo<StudentAuthModel>>();
 builder.Services.AddScoped<IStudentRepo<StudentModel>, StudentRepo<StudentModel>>();
+builder.Services.AddScoped<IConfirmationTokenRepo, ConfirmationTokenRepo>();
 
 // Mappers
 builder.Services.AddSingleton<IMapper<StudentEntity, StudentAuthModel>, StudentAuthMapper>();
 builder.Services.AddSingleton<IMapper<StudentEntity, StudentModel>, StudentMapper>();
+builder.Services.AddSingleton<IMapper<ConfirmationTokenEntity, ConfirmationTokenModel>, ConfirmationTokenMapper>();
 
 // Others
 builder.Services.AddSingleton<IPasswordHasher<StudentAuthModel>, PasswordHasher<StudentAuthModel>>();

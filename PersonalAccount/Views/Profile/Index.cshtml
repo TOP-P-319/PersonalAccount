@@ -1,4 +1,4 @@
-﻿@model StudentModel
+﻿@model StudentProfileViewModel
 
 <div class="container d-flex justify-content-between">
     <div class="d-flex flex-column gap-2">
@@ -8,22 +8,28 @@
         <div class="card">
             @if (Model.PhotoUrl != null)
             {
-                <img class="card-img-top" src="@Model.PhotoUrl.AbsoluteUri" alt="Student Photo"/>
+                <img class="card-img-top" src="@Model.PhotoUrl" alt="Student Photo"/>
             }
             <header class="card-header">
                 <h3 class="text-center">@Model.FullName</h3>
             </header>
-            
+
             <main class="card-body">
                 <p class="text-start fw-bold">@Model.GroupName</p>
-                <form class="d-flex gap-2" method="post" asp-action="Send" asp-controller="EmailConfirmation">
-                    <sapn class="text-start text-primary nav-link" href="@Model.Email">@Model.Email</sapn>
-                    <button class="btn btn-link nav-link text-danger" type="submit">Подтвердить</button>
-                </form>
+                <div class="d-flex gap-2">
+                    <span class="text-start text-primary nav-link" href="@Model.Email">@Model.Email</span>
+                    @if (Model.IsEmailConfirmed)
+                    {
+                        <span class="nav-link text-success fst-italic">Почта подтверждена</span>
+                    }
+                    else
+                    {
+                        <form method="post" asp-action="Send" asp-controller="EmailConfirmation">
+                            <button class="btn btn-link nav-link text-danger" type="submit">Подтвердить</button>
+                        </form>
+                    }
+                </div>
             </main>
-            <footer class="card-footer">
-                <p class="text-end">ID: @Model.Id</p>
-            </footer>
         </div>
     </div>
 </div>
