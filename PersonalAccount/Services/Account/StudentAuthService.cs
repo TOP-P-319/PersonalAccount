@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using PersonalAccount.Models.Student;
 using PersonalAccount.Repository;
 
-namespace PersonalAccount.Services.Auth;
+namespace PersonalAccount.Services.Account;
 
 public class StudentAuthService(IStudentRepo<StudentAuthModel> students, IPasswordHasher<StudentAuthModel> hasher)
     : IStudentAuthService

@@ -22,7 +22,7 @@ public class DbBootstrap(
         {
             FullName = "John Doe",
             GroupName = "P-319",
-            Email = "example@top",
+            Email = "shamraev.alexandr@gmail.com",
             PhotoUrl =
                 "https://img.magnific.com/free-photo/view-beautiful-persian-domestic-cat_23-2151773821.jpg?semt=ais_hybrid&w=740&q=80"
                     .ToUri()

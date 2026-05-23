@@ -1,17 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-    </PropertyGroup>
+    <UserSecretsId>8b7eb7e7-ee52-4d3e-b883-9373593c3fa8</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MailKit" Version="4.16.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.8">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.8" />
+      <PackageReference Include="MimeKit" Version="4.16.0" />
     </ItemGroup>
 
 </Project>
