@@ -20,4 +20,9 @@ public class StudentProfileRepo(
             .FirstOrDefaultAsync(entity => entity.AccountId == accountId);
         return entity == null ? null : mapper.ToModel(entity);
     }
+
+    public async Task<List<StudentProfileModel>> GetAllAsync() =>
+        await StudentProfiles
+            .Select(entity => mapper.ToModel(entity))
+            .ToListAsync();
 }

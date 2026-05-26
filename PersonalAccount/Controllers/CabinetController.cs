@@ -11,6 +11,7 @@ namespace PersonalAccount.Controllers;
 [Authorize]
 public class CabinetController(
     IStudentCabinetService studentCabinetService,
+    IAdminCabinetService adminCabinetService,
     IConfirmationTokenService confirmationTokenService)
     : Controller
 {
@@ -32,7 +33,19 @@ public class CabinetController(
     [Authorize(Roles = AccountRoleConstants.Admin)]
     public async Task<IActionResult> Admin()
     {
-        return View();
+        var accounts = (await adminCabinetService.GetAllStudentAccounts())
+            .ToDictionary(account => account.Id);
+        var studentProfiles = await adminCabinetService.GetAllStudentProfiles();
+        return View(new AdminCabinetViewModel
+        {
+            Students = studentProfiles.Select(studentProfile => new AdminCabinetStudentViewModel
+            {
+                FullName = studentProfile.FullName,
+                GroupName = studentProfile.GroupName,
+                PhotoUrl = studentProfile.PhotoUrl?.ToString(),
+                Email = accounts[studentProfile.AccountId].Email
+            }).ToList()
+        });
     }
 
     [HttpGet]

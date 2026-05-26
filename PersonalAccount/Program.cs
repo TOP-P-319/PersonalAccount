@@ -34,9 +34,10 @@ builder.Services.Configure<DbBootstrapSettings>(builder.Configuration.GetSection
 
 // Services
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IStudentCabinetService, StudentCabinetService>();
 builder.Services.AddScoped<ISmtpClientService, SmtpClientService>();
 builder.Services.AddScoped<IConfirmationTokenService, ConfirmationTokenService>();
+builder.Services.AddScoped<IStudentCabinetService, StudentCabinetService>();
+builder.Services.AddScoped<IAdminCabinetService, AdminCabinetService>();
 if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<DbBootstrapService>();
 
