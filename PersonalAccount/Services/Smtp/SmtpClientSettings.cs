@@ -1,6 +1,6 @@
 ﻿namespace PersonalAccount.Services.Smtp;
 
-public class SmtpSettings
+public class SmtpClientSettings
 {
     public string Host { get; set; } = string.Empty;
     public int Port { get; set; }

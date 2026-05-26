@@ -6,7 +6,7 @@ using PersonalAccount.ViewModels;
 
 namespace PersonalAccount.Controllers;
 
-public class AccountController(IStudentAuthService auth) : Controller
+public class AccountController(IAccountService auth) : Controller
 {
     [HttpGet]
     public IActionResult Login(string? returnUrl = null)
@@ -23,7 +23,7 @@ public class AccountController(IStudentAuthService auth) : Controller
     {
         if (!ModelState.IsValid) return View(model);
 
-        var student = await auth.ValidateStudentAsync(model.Email, model.Password);
+        var student = await auth.ValidateCredentialsAsync(model.Email, model.Password);
         if (student == null)
         {
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");

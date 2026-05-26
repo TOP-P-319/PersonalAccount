@@ -15,7 +15,7 @@ public class AccountRepo(AppDbContext ctx, IMapper<AccountEntity, AccountModel> 
         var entity = await Accounts
             .AsNoTracking()
             .FirstOrDefaultAsync(entity => entity.Email == email);
-        
+
         return entity == null ? null : mapper.ToModel(entity);
     }
 
@@ -23,5 +23,14 @@ public class AccountRepo(AppDbContext ctx, IMapper<AccountEntity, AccountModel> 
     {
         var entity = await Accounts.FindAsync(id);
         return entity == null ? null : mapper.ToModel(entity);
+    }
+
+    public async Task<bool> AnyAsync() =>
+        await ctx.Accounts.AnyAsync();
+
+    public async Task AddAsync(AccountModel account)
+    {
+        await ctx.Accounts.AddAsync(mapper.ToEntity(account));
+        await ctx.SaveChangesAsync();
     }
 }

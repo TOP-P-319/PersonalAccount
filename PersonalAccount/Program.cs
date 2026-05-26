@@ -7,8 +7,8 @@ using PersonalAccount.Mappers;
 using PersonalAccount.Models;
 using PersonalAccount.Repositories;
 using PersonalAccount.Services.Account;
-using PersonalAccount.Services.Profile;
 using PersonalAccount.Services.Bootstrap;
+using PersonalAccount.Services.Cabinet;
 using PersonalAccount.Services.Smtp;
 using PersonalAccount.Services.Tokens;
 
@@ -29,11 +29,11 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(
 );
 
 // Options
-builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"));
+builder.Services.Configure<SmtpClientSettings>(builder.Configuration.GetSection("Smtp"));
 
 // Services
-builder.Services.AddScoped<IStudentAuthService, StudentAuthService>();
-builder.Services.AddScoped<IStudentProfileService, StudentProfileService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IStudentCabinetService, StudentCabinetService>();
 builder.Services.AddScoped<ISmtpClientService, SmtpClientService>();
 builder.Services.AddScoped<IConfirmationTokenService, ConfirmationTokenService>();
 if (builder.Environment.IsDevelopment())

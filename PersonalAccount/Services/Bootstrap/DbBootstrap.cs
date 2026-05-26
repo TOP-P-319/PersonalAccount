@@ -1,36 +1,27 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using PersonalAccount.Data;
-using PersonalAccount.Data.Entities;
-using PersonalAccount.Mappers;
-using PersonalAccount.Utils;
+using Microsoft.Extensions.Options;
+using PersonalAccount.Models;
+using PersonalAccount.Repositories;
 
 namespace PersonalAccount.Services.Bootstrap;
 
 public class DbBootstrap(
-    AppDbContext ctx,
-    IMapper<StudentProfileEntity, StudentAuthModel> mapper,
-    IPasswordHasher<StudentAuthModel> hasher)
+    IAccountRepo accountRepo,
+    IPasswordHasher<AccountModel> hasher,
+    IOptions<DbBootstrapSettings> options)
 {
+    private readonly DbBootstrapSettings _settings = options.Value;
+
     public async Task SeedAsync()
     {
-        var hasStudents = await ctx.StudentProfiles.AnyAsync();
+        var hasStudents = await accountRepo.AnyAsync();
         if (hasStudents) return;
 
-        var model = new StudentAuthModel
+        var account = new AccountModel
         {
-            FullName = "John Doe",
-            GroupName = "P-319",
-            Email = "shamraev.alexandr@gmail.com",
-            PhotoUrl =
-                "https://img.magnific.com/free-photo/view-beautiful-persian-domestic-cat_23-2151773821.jpg?semt=ais_hybrid&w=740&q=80"
-                    .ToUri()
+            Email = _settings.Email,
         };
-
-        var entity = mapper.ToEntity(model);
-        entity.PasswordHash = hasher.HashPassword(model, "example");
-        
-        await ctx.StudentProfiles.AddAsync(entity);
-        await ctx.SaveChangesAsync();
+        account.PasswordHash = hasher.HashPassword(account, _settings.Password);
+        await accountRepo.AddAsync(account);
     }
 }
