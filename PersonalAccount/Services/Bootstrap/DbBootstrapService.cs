@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using PersonalAccount.Models;
 using PersonalAccount.Repositories;
+using PersonalAccount.Types;
 
 namespace PersonalAccount.Services.Bootstrap;
 
@@ -20,6 +21,7 @@ public class DbBootstrapService(
         var account = new AccountModel
         {
             Email = _settings.Email,
+            Role = AccountRoles.Admin
         };
         account.PasswordHash = hasher.HashPassword(account, _settings.Password);
         await accountRepo.AddAsync(account);

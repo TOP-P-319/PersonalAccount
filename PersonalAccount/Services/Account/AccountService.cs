@@ -25,6 +25,7 @@ public class AccountService(IAccountRepo accountRepo, IPasswordHasher<AccountMod
         {
             new(ClaimTypes.NameIdentifier, account.Id.ToString()),
             new(ClaimTypes.Email, account.Email),
+            new(ClaimTypes.Role, account.Role.ToString())
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -33,5 +34,6 @@ public class AccountService(IAccountRepo accountRepo, IPasswordHasher<AccountMod
         await ctx.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
     }
 
-    public async Task SignOutAsync(HttpContext ctx) => await ctx.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    public async Task SignOutAsync(HttpContext ctx) =>
+        await ctx.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 }

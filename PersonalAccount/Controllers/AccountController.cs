@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PersonalAccount.Models;
 using PersonalAccount.Services.Account;
 using PersonalAccount.ViewModels;
 
 namespace PersonalAccount.Controllers;
 
-public class AccountController(IAccountService auth) : Controller
+public class AccountController(IAccountService accountService) : Controller
 {
     [HttpGet]
     public IActionResult Login(string? returnUrl = null)
@@ -23,14 +22,14 @@ public class AccountController(IAccountService auth) : Controller
     {
         if (!ModelState.IsValid) return View(model);
 
-        var account = await auth.ValidateCredentialsAsync(model.Email, model.Password);
+        var account = await accountService.ValidateCredentialsAsync(model.Email, model.Password);
         if (account == null)
         {
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return View(model);
         }
 
-        await auth.SignInAsync(HttpContext, account);
+        await accountService.SignInAsync(HttpContext, account);
         return Redirect(model.ReturnUrl ?? "/");
     }
 
@@ -39,7 +38,13 @@ public class AccountController(IAccountService auth) : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
-        await auth.SignOutAsync(HttpContext);
+        await accountService.SignOutAsync(HttpContext);
         return RedirectToAction("Index", "Home");
+    }
+
+    [HttpGet]
+    public IActionResult AccessDenied()
+    {
+        return View();
     }
 }
