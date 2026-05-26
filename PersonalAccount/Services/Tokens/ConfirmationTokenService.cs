@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using PersonalAccount.Models;
-using PersonalAccount.Repository;
+using PersonalAccount.Repositories;
 
 namespace PersonalAccount.Services.Tokens;
 
@@ -22,7 +22,7 @@ public class ConfirmationTokenService(IConfirmationTokenRepo confirmations) : IC
 
     public async Task<bool> ValidateTokenAsync(int studentId, string token)
     {
-        var tokens = await confirmations.GetAllByStudentId(studentId);
+        var tokens = await confirmations.GetAllByAccountId(studentId);
         var tokenHash = HashToken(token);
         var confirmation = tokens.FirstOrDefault(t =>
             t.TokenHash == tokenHash
@@ -45,7 +45,7 @@ public class ConfirmationTokenService(IConfirmationTokenRepo confirmations) : IC
 
     public async Task<bool> HasConfirmedTokenAsync(int studentId)
     {
-        var tokens = await confirmations.GetAllByStudentId(studentId);
+        var tokens = await confirmations.GetAllByAccountId(studentId);
         return tokens.Any(t => t.ConfirmedAt != null);
     }
 

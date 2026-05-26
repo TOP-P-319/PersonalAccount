@@ -1,9 +1,9 @@
 ﻿using PersonalAccount.Models;
-using PersonalAccount.Repository;
+using PersonalAccount.Repositories;
 
 namespace PersonalAccount.Services.Profile;
 
-public class StudentProfileService(IStudentRepo<StudentProfileModel> students) : IStudentProfileService
+public class StudentProfileService(IAccountRepo studentsProfile) : IStudentProfileService
 {
-    public async Task<StudentProfileModel?> GetByIdAsync(int id) => await students.GetByIdAsync(id);
+    public async Task<StudentProfileModel?> GetByIdAsync(int id) => await studentsProfile.GetByIdAsync(id);
 }

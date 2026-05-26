@@ -5,7 +5,7 @@ using PersonalAccount.Data;
 using PersonalAccount.Data.Entities;
 using PersonalAccount.Mappers;
 using PersonalAccount.Models;
-using PersonalAccount.Repository;
+using PersonalAccount.Repositories;
 using PersonalAccount.Services.Account;
 using PersonalAccount.Services.Profile;
 using PersonalAccount.Services.Bootstrap;
@@ -40,8 +40,8 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<DbBootstrap>();
 
 // Repositories
-builder.Services.AddScoped<IStudentRepo<StudentAuthModel>, StudentRepo<StudentAuthModel>>();
-builder.Services.AddScoped<IStudentRepo<StudentProfileModel>, StudentRepo<StudentProfileModel>>();
+builder.Services.AddScoped<IAccountRepo, AccountRepo<StudentAuthModel>>();
+builder.Services.AddScoped<IAccountRepo, AccountRepo<StudentProfileModel>>();
 builder.Services.AddScoped<IConfirmationTokenRepo, ConfirmationTokenRepo>();
 
 // Mappers

@@ -4,10 +4,12 @@ using PersonalAccount.Data.Entities;
 using PersonalAccount.Mappers;
 using PersonalAccount.Models;
 
-namespace PersonalAccount.Repository;
+namespace PersonalAccount.Repositories;
 
-public class ConfirmationTokenRepo(AppDbContext ctx, IMapper<ConfirmationTokenEntity, ConfirmationTokenModel> mapper)
-    : IConfirmationTokenRepo
+public class ConfirmationTokenRepo(
+    AppDbContext ctx,
+    IMapper<ConfirmationTokenEntity, ConfirmationTokenModel> mapper
+) : IConfirmationTokenRepo
 {
     private DbSet<ConfirmationTokenEntity> ConfirmationTokens => ctx.ConfirmationTokens;
 
@@ -17,10 +19,10 @@ public class ConfirmationTokenRepo(AppDbContext ctx, IMapper<ConfirmationTokenEn
         await ctx.SaveChangesAsync();
     }
 
-    public async Task<List<ConfirmationTokenModel>> GetAllByStudentId(int studentId) =>
+    public async Task<List<ConfirmationTokenModel>> GetAllByAccountId(int accountId) =>
         await ConfirmationTokens
             .AsNoTracking()
-            .Where(entity => entity.AccountId == studentId)
+            .Where(entity => entity.AccountId == accountId)
             .Select(entity => mapper.ToModel(entity))
             .ToListAsync();
 

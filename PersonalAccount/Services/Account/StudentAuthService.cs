@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using PersonalAccount.Models;
-using PersonalAccount.Repository;
+using PersonalAccount.Repositories;
 
 namespace PersonalAccount.Services.Account;
 
-public class StudentAuthService(IStudentRepo<StudentAuthModel> students, IPasswordHasher<StudentAuthModel> hasher)
+public class StudentAuthService(IAccountRepo studentsProfile, IPasswordHasher<StudentAuthModel> hasher)
     : IStudentAuthService
 {
     public async Task<StudentProfileModel?> ValidateStudentAsync(string email, string password)
     {
-        var student = await students.GetByEmailAsync(email);
+        var student = await studentsProfile.GetByEmailAsync(email);
         if (student is null) return null;
 
         var result = hasher.VerifyHashedPassword(student, student.PasswordHash, password);

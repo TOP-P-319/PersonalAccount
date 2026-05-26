@@ -1,10 +1,10 @@
 ﻿using PersonalAccount.Models;
 
-namespace PersonalAccount.Repository;
+namespace PersonalAccount.Repositories;
 
 public interface IConfirmationTokenRepo
 {
     Task AddAsync(ConfirmationTokenModel model);
-    Task<List<ConfirmationTokenModel>> GetAllByStudentId(int  studentId);
+    Task<List<ConfirmationTokenModel>> GetAllByAccountId(int  accountId);
     Task UpdateConfirmedAtAsync(int id, DateTime confirmedAt);
 }
