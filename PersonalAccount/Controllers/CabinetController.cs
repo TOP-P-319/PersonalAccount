@@ -8,7 +8,7 @@ using PersonalAccount.ViewModels;
 namespace PersonalAccount.Controllers;
 
 [Authorize]
-public class ProfileController(IStudentCabinetService students, IConfirmationTokenService confirmations) : Controller
+public class CabinetController(IStudentCabinetService students, IConfirmationTokenService confirmations) : Controller
 {
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -21,7 +21,7 @@ public class ProfileController(IStudentCabinetService students, IConfirmationTok
         if (student == null) return RedirectToAction("Error", "Home");
         var confirmed = await confirmations.HasConfirmedTokenAsync(student.AccountId);
         
-        return View(new StudentProfileViewModel
+        return View(new StudentCabinetViewModel
         {
             FullName = student.FullName,
             Email = accountEmail,

@@ -24,7 +24,7 @@ public class EmailConfirmationController(ISmtpClientService smtp, IConfirmationT
         var confirmed = await confirmation.ValidateTokenAsync(model.AccountId, model.Token);
         if (!confirmed) return RedirectToAction("Error", "Home");
         
-        return RedirectToAction("Index", "Profile");
+        return RedirectToAction("Index", "Cabinet");
     }
 
     [HttpPost]
@@ -46,6 +46,6 @@ public class EmailConfirmationController(ISmtpClientService smtp, IConfirmationT
                                                                         </body>
                                                                         """);
 
-        return RedirectToAction("Index", "Profile");
+        return RedirectToAction("Index", "Cabinet");
     }
 }
