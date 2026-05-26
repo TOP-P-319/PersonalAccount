@@ -5,7 +5,7 @@ using PersonalAccount.Repositories;
 
 namespace PersonalAccount.Services.Bootstrap;
 
-public class DbBootstrap(
+public class DbBootstrapService(
     IAccountRepo accountRepo,
     IPasswordHasher<AccountModel> hasher,
     IOptions<DbBootstrapSettings> options)

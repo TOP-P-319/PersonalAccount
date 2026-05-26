@@ -30,6 +30,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(
 
 // Options
 builder.Services.Configure<SmtpClientSettings>(builder.Configuration.GetSection("Smtp"));
+builder.Services.Configure<DbBootstrapSettings>(builder.Configuration.GetSection("Db").GetSection("Bootstrap"));
 
 // Services
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -37,20 +38,20 @@ builder.Services.AddScoped<IStudentCabinetService, StudentCabinetService>();
 builder.Services.AddScoped<ISmtpClientService, SmtpClientService>();
 builder.Services.AddScoped<IConfirmationTokenService, ConfirmationTokenService>();
 if (builder.Environment.IsDevelopment())
-    builder.Services.AddScoped<DbBootstrap>();
+    builder.Services.AddScoped<DbBootstrapService>();
 
 // Repositories
-builder.Services.AddScoped<IAccountRepo, AccountRepo<StudentAuthModel>>();
-builder.Services.AddScoped<IAccountRepo, AccountRepo<StudentProfileModel>>();
+builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<IStudentProfileRepo, StudentProfileRepo>();
 builder.Services.AddScoped<IConfirmationTokenRepo, ConfirmationTokenRepo>();
 
 // Mappers
-builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentAuthModel>, StudentAuthMapper>();
+builder.Services.AddSingleton<IMapper<AccountEntity, AccountModel>, AccountMapper>();
 builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentProfileModel>, StudentProfileMapper>();
 builder.Services.AddSingleton<IMapper<ConfirmationTokenEntity, ConfirmationTokenModel>, ConfirmationTokenMapper>();
 
 // Others
-builder.Services.AddSingleton<IPasswordHasher<StudentAuthModel>, PasswordHasher<StudentAuthModel>>();
+builder.Services.AddSingleton<IPasswordHasher<AccountModel>, PasswordHasher<AccountModel>>();
 
 var app = builder.Build();
 
@@ -58,7 +59,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
-    var bootstrap = scope.ServiceProvider.GetRequiredService<DbBootstrap>();
+    var bootstrap = scope.ServiceProvider.GetRequiredService<DbBootstrapService>();
     await bootstrap.SeedAsync();
 }
 else
