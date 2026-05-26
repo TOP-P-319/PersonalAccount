@@ -34,7 +34,7 @@
                         @if (isAuthenticated)
                         {
                             <div class="d-flex">
-                                <a class="nav-link text-primary" asp-area="" asp-controller="Profile"
+                                <a class="nav-link text-primary" asp-area="" asp-controller="Cabinet"
                                    asp-action="Index"><i class="bi bi-person-circle"></i> Личный кабинет</a>
                                 <form method="post" asp-controller="Account" asp-action="Logout">
                                     <button class="btn btn-link nav-link text-danger" type="submit">Выйти <i class="bi bi-box-arrow-right"></i> </button>
@@ -43,7 +43,7 @@
                         }
                         else
                         {
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Profile"
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Cabinet"
                                asp-action="Index"><i class="bi bi-person-circle"></i> Войти</a>
                         }
                     </li>

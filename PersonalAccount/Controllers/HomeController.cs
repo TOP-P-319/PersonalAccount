@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using PersonalAccount.Models;
+using PersonalAccount.ViewModels;
 
 namespace PersonalAccount.Controllers;
 
