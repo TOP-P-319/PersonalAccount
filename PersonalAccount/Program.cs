@@ -46,7 +46,7 @@ builder.Services.AddScoped<IConfirmationTokenRepo, ConfirmationTokenRepo>();
 
 // Mappers
 builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentAuthModel>, StudentAuthMapper>();
-builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentProfileModel>, StudentMapper>();
+builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentProfileModel>, StudentProfileMapper>();
 builder.Services.AddSingleton<IMapper<ConfirmationTokenEntity, ConfirmationTokenModel>, ConfirmationTokenMapper>();
 
 // Others
