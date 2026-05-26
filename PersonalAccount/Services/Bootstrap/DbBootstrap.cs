@@ -10,12 +10,12 @@ namespace PersonalAccount.Services.Bootstrap;
 
 public class DbBootstrap(
     AppDbContext ctx,
-    IMapper<StudentEntity, StudentAuthModel> mapper,
+    IMapper<StudentProfileEntity, StudentAuthModel> mapper,
     IPasswordHasher<StudentAuthModel> hasher)
 {
     public async Task SeedAsync()
     {
-        var hasStudents = await ctx.Students.AnyAsync();
+        var hasStudents = await ctx.StudentProfiles.AnyAsync();
         if (hasStudents) return;
 
         var model = new StudentAuthModel
@@ -31,7 +31,7 @@ public class DbBootstrap(
         var entity = mapper.ToEntity(model);
         entity.PasswordHash = hasher.HashPassword(model, "example");
         
-        await ctx.Students.AddAsync(entity);
+        await ctx.StudentProfiles.AddAsync(entity);
         await ctx.SaveChangesAsync();
     }
 }

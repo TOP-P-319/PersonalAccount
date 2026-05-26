@@ -4,23 +4,23 @@ using PersonalAccount.Utils;
 
 namespace PersonalAccount.Mappers;
 
-public class StudentMapper : IMapper<StudentEntity, StudentModel>
+public class StudentMapper : IMapper<StudentProfileEntity, StudentModel>
 {
-    public StudentEntity ToEntity(StudentModel model) => new()
+    public StudentProfileEntity ToEntity(StudentModel model) => new()
     {
-        Id = model.Id,
+        ProfileId = model.Id,
         Email = model.Email,
         FullName = model.FullName,
         PhotoUrl = model.PhotoUrl?.ToString(),
         GroupName =  model.GroupName
     };
 
-    public StudentModel ToModel(StudentEntity entity) => new()
+    public StudentModel ToModel(StudentProfileEntity profileEntity) => new()
     {
-        Id = entity.Id,
-        Email = entity.Email,
-        FullName = entity.FullName,
-        PhotoUrl = entity.PhotoUrl?.ToUri(),
-        GroupName =  entity.GroupName
+        Id = profileEntity.ProfileId,
+        Email = profileEntity.Email,
+        FullName = profileEntity.FullName,
+        PhotoUrl = profileEntity.PhotoUrl?.ToUri(),
+        GroupName =  profileEntity.GroupName
     };
 }

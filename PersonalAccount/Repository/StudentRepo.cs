@@ -6,9 +6,9 @@ using PersonalAccount.Models.Student;
 
 namespace PersonalAccount.Repository;
 
-public class StudentRepo<T>(AppDbContext ctx, IMapper<StudentEntity, T> mapper) : IStudentRepo<T> where T : StudentModel
+public class StudentRepo<T>(AppDbContext ctx, IMapper<StudentProfileEntity, T> mapper) : IStudentRepo<T> where T : StudentModel
 {
-    private DbSet<StudentEntity> Students => ctx.Students;
+    private DbSet<StudentProfileEntity> Students => ctx.StudentProfiles;
 
     public async Task<T?> GetByEmailAsync(string email)
     {

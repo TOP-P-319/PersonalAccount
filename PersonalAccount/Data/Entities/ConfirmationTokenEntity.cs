@@ -3,8 +3,8 @@
 public class ConfirmationTokenEntity
 {
     public int Id { get; set; }
-    public int StudentId { get; set; }
-    public StudentEntity? Student { get; set; }
+    public int AccountId { get; set; }
+    public AccountEntity? Account { get; set; }
     
     public string TokenHash { get; set; } =  string.Empty;
     public DateTime ExpiresAt { get; set; }

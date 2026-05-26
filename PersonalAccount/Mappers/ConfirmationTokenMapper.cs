@@ -8,7 +8,7 @@ public class ConfirmationTokenMapper : IMapper<ConfirmationTokenEntity, Confirma
     public ConfirmationTokenEntity ToEntity(ConfirmationTokenModel model) => new()
     {
         Id = model.Id,
-        StudentId = model.StudentId,
+        AccountId = model.StudentId,
 
         TokenHash = model.TokenHash,
         ConfirmedAt = model.ConfirmedAt,
@@ -18,7 +18,7 @@ public class ConfirmationTokenMapper : IMapper<ConfirmationTokenEntity, Confirma
     public ConfirmationTokenModel ToModel(ConfirmationTokenEntity entity) => new()
     {
         Id = entity.Id,
-        StudentId = entity.StudentId,
+        StudentId = entity.AccountId,
 
         TokenHash = entity.TokenHash,
         ConfirmedAt = entity.ConfirmedAt,

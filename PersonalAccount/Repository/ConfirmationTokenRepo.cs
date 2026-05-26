@@ -20,7 +20,7 @@ public class ConfirmationTokenRepo(AppDbContext ctx, IMapper<ConfirmationTokenEn
     public async Task<List<ConfirmationTokenModel>> GetAllByStudentId(int studentId) =>
         await ConfirmationTokens
             .AsNoTracking()
-            .Where(entity => entity.StudentId == studentId)
+            .Where(entity => entity.AccountId == studentId)
             .Select(entity => mapper.ToModel(entity))
             .ToListAsync();
 
