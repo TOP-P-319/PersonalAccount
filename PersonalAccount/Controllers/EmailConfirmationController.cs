@@ -11,9 +11,9 @@ namespace PersonalAccount.Controllers;
 public class EmailConfirmationController(ISmtpClientService smtp, IConfirmationTokenService confirmation) : Controller
 {
     [HttpGet]
-    public IActionResult Index(int studentId, string token) => View(new EmailConfirmationViewModel
+    public IActionResult Index(int accountId, string token) => View(new EmailConfirmationViewModel
     {
-        StudentId = studentId,
+        AccountId = accountId,
         Token = token
     });
 
@@ -21,7 +21,7 @@ public class EmailConfirmationController(ISmtpClientService smtp, IConfirmationT
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(EmailConfirmationViewModel model)
     {
-        var confirmed = await confirmation.ValidateTokenAsync(model.StudentId, model.Token);
+        var confirmed = await confirmation.ValidateTokenAsync(model.AccountId, model.Token);
         if (!confirmed) return RedirectToAction("Error", "Home");
         
         return RedirectToAction("Index", "Profile");
@@ -32,15 +32,15 @@ public class EmailConfirmationController(ISmtpClientService smtp, IConfirmationT
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Send()
     {
-        var studentId = User.GetId();
-        var studentEmail = User.GetEmail();
-        if (studentId == null || studentEmail == null) return RedirectToAction("Error", "Home");
+        var accountId = User.GetId();
+        var accountEmail = User.GetEmail();
+        if (accountId == null || accountEmail == null) return RedirectToAction("Error", "Home");
 
-        var token = await confirmation.GenerateTokenAsync(studentId.Value);
+        var token = await confirmation.GenerateTokenAsync(accountId.Value);
 
-        var confirmationUrl = Url.Action("Index", "EmailConfirmation", new { studentId, token }, Request.Scheme);
+        var confirmationUrl = Url.Action("Index", "EmailConfirmation", new { accountId, token }, Request.Scheme);
 
-        await smtp.SendEmailAsync(studentEmail, "Подтверждение почты", $"""
+        await smtp.SendEmailAsync(accountEmail, "Подтверждение почты", $"""
                                                                         <body>
                                                                             <a href="{confirmationUrl}">Подтвердить почту</a>
                                                                         </body>

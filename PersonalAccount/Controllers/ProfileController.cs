@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PersonalAccount.Models;
 using PersonalAccount.Services.Cabinet;
 using PersonalAccount.Services.Tokens;
 using PersonalAccount.Utils;
@@ -14,16 +13,18 @@ public class ProfileController(IStudentCabinetService students, IConfirmationTok
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var studentId = User.GetId();
-        if (studentId == null) return RedirectToAction("Error", "Home");
-        var student = await students.GetByAccountIdAsync(studentId.Value);
+        var accountId = User.GetId();
+        var accountEmail =  User.GetEmail();
+        if (accountId == null || accountEmail == null) return Forbid();
+        
+        var student = await students.GetByAccountIdAsync(accountId.Value);
         if (student == null) return RedirectToAction("Error", "Home");
-        var confirmed = await confirmations.HasConfirmedTokenAsync(studentId.Value);
+        var confirmed = await confirmations.HasConfirmedTokenAsync(student.AccountId);
         
         return View(new StudentProfileViewModel
         {
             FullName = student.FullName,
-            Email = student.Email,
+            Email = accountEmail,
             GroupName = student.GroupName,
             PhotoUrl = student.PhotoUrl?.ToString(),
             IsEmailConfirmed = confirmed

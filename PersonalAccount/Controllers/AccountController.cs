@@ -23,14 +23,14 @@ public class AccountController(IAccountService auth) : Controller
     {
         if (!ModelState.IsValid) return View(model);
 
-        var student = await auth.ValidateCredentialsAsync(model.Email, model.Password);
-        if (student == null)
+        var account = await auth.ValidateCredentialsAsync(model.Email, model.Password);
+        if (account == null)
         {
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return View(model);
         }
 
-        await auth.SignInAsync(HttpContext, student);
+        await auth.SignInAsync(HttpContext, account);
         return Redirect(model.ReturnUrl ?? "/");
     }
 
