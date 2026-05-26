@@ -1,23 +1,23 @@
 ﻿using PersonalAccount.Data.Entities;
-using PersonalAccount.Models.Student;
+using PersonalAccount.Models;
 using PersonalAccount.Utils;
 
 namespace PersonalAccount.Mappers;
 
-public class StudentMapper : IMapper<StudentProfileEntity, StudentModel>
+public class StudentMapper : IMapper<StudentProfileEntity, StudentProfileModel>
 {
-    public StudentProfileEntity ToEntity(StudentModel model) => new()
+    public StudentProfileEntity ToEntity(StudentProfileModel profileModel) => new()
     {
-        ProfileId = model.Id,
-        Email = model.Email,
-        FullName = model.FullName,
-        PhotoUrl = model.PhotoUrl?.ToString(),
-        GroupName =  model.GroupName
+        ProfileId = profileModel.ProfileId,
+        Email = profileModel.Email,
+        FullName = profileModel.FullName,
+        PhotoUrl = profileModel.PhotoUrl?.ToString(),
+        GroupName =  profileModel.GroupName
     };
 
-    public StudentModel ToModel(StudentProfileEntity profileEntity) => new()
+    public StudentProfileModel ToModel(StudentProfileEntity profileEntity) => new()
     {
-        Id = profileEntity.ProfileId,
+        ProfileId = profileEntity.ProfileId,
         Email = profileEntity.Email,
         FullName = profileEntity.FullName,
         PhotoUrl = profileEntity.PhotoUrl?.ToUri(),

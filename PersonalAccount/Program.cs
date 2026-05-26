@@ -5,7 +5,6 @@ using PersonalAccount.Data;
 using PersonalAccount.Data.Entities;
 using PersonalAccount.Mappers;
 using PersonalAccount.Models;
-using PersonalAccount.Models.Student;
 using PersonalAccount.Repository;
 using PersonalAccount.Services.Account;
 using PersonalAccount.Services.Profile;
@@ -42,12 +41,12 @@ if (builder.Environment.IsDevelopment())
 
 // Repositories
 builder.Services.AddScoped<IStudentRepo<StudentAuthModel>, StudentRepo<StudentAuthModel>>();
-builder.Services.AddScoped<IStudentRepo<StudentModel>, StudentRepo<StudentModel>>();
+builder.Services.AddScoped<IStudentRepo<StudentProfileModel>, StudentRepo<StudentProfileModel>>();
 builder.Services.AddScoped<IConfirmationTokenRepo, ConfirmationTokenRepo>();
 
 // Mappers
 builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentAuthModel>, StudentAuthMapper>();
-builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentModel>, StudentMapper>();
+builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentProfileModel>, StudentMapper>();
 builder.Services.AddSingleton<IMapper<ConfirmationTokenEntity, ConfirmationTokenModel>, ConfirmationTokenMapper>();
 
 // Others

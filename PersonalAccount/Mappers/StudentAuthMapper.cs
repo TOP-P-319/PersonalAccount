@@ -1,5 +1,4 @@
 ﻿using PersonalAccount.Data.Entities;
-using PersonalAccount.Models.Student;
 using PersonalAccount.Utils;
 
 namespace PersonalAccount.Mappers;

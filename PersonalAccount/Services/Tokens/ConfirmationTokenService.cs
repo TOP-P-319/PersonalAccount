@@ -12,7 +12,7 @@ public class ConfirmationTokenService(IConfirmationTokenRepo confirmations) : IC
         var token = Guid.NewGuid().ToString();
         await confirmations.AddAsync(new ConfirmationTokenModel
         {
-            StudentId = studentId,
+            AccountId = studentId,
             TokenHash = HashToken(token),
             ExpiresAt = DateTime.UtcNow.AddHours(12)
         });

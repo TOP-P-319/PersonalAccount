@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using PersonalAccount.Models.Student;
+using PersonalAccount.Models;
 using PersonalAccount.Repository;
 
 namespace PersonalAccount.Services.Account;
@@ -10,7 +10,7 @@ namespace PersonalAccount.Services.Account;
 public class StudentAuthService(IStudentRepo<StudentAuthModel> students, IPasswordHasher<StudentAuthModel> hasher)
     : IStudentAuthService
 {
-    public async Task<StudentModel?> ValidateStudentAsync(string email, string password)
+    public async Task<StudentProfileModel?> ValidateStudentAsync(string email, string password)
     {
         var student = await students.GetByEmailAsync(email);
         if (student is null) return null;
@@ -18,16 +18,16 @@ public class StudentAuthService(IStudentRepo<StudentAuthModel> students, IPasswo
         var result = hasher.VerifyHashedPassword(student, student.PasswordHash, password);
         if (result == PasswordVerificationResult.Failed) return null;
 
-        return student.Clone() as StudentModel;
+        return student.Clone() as StudentProfileModel;
     }
 
-    public async Task SignInAsync(HttpContext ctx, StudentModel student)
+    public async Task SignInAsync(HttpContext ctx, StudentProfileModel studentProfile)
     {
         var claims = new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, student.Id.ToString()),
-            new(ClaimTypes.Email, student.Email),
-            new(ClaimTypes.Name, student.FullName),
+            new(ClaimTypes.NameIdentifier, studentProfile.ProfileId.ToString()),
+            new(ClaimTypes.Email, studentProfile.Email),
+            new(ClaimTypes.Name, studentProfile.FullName),
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

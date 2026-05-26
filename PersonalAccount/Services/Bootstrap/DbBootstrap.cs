@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using PersonalAccount.Data;
 using PersonalAccount.Data.Entities;
 using PersonalAccount.Mappers;
-using PersonalAccount.Models.Student;
 using PersonalAccount.Utils;
 
 namespace PersonalAccount.Services.Bootstrap;

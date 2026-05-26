@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using PersonalAccount.Data;
 using PersonalAccount.Data.Entities;
 using PersonalAccount.Mappers;
-using PersonalAccount.Models.Student;
+using PersonalAccount.Models;
 
 namespace PersonalAccount.Repository;
 
-public class StudentRepo<T>(AppDbContext ctx, IMapper<StudentProfileEntity, T> mapper) : IStudentRepo<T> where T : StudentModel
+public class StudentRepo<T>(AppDbContext ctx, IMapper<StudentProfileEntity, T> mapper) : IStudentRepo<T> where T : StudentProfileModel
 {
     private DbSet<StudentProfileEntity> Students => ctx.StudentProfiles;
 

@@ -1,8 +1,8 @@
-﻿using PersonalAccount.Models.Student;
+﻿using PersonalAccount.Models;
 
 namespace PersonalAccount.Services.Profile;
 
 public interface IStudentProfileService
 {
-    Task<StudentModel?> GetByIdAsync(int id);
+    Task<StudentProfileModel?> GetByIdAsync(int id);
 }

@@ -1,4 +1,4 @@
-namespace PersonalAccount.Models;
+namespace PersonalAccount.ViewModels;
 
 public class ErrorViewModel
 {

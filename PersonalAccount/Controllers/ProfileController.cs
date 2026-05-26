@@ -4,6 +4,7 @@ using PersonalAccount.Models;
 using PersonalAccount.Services.Profile;
 using PersonalAccount.Services.Tokens;
 using PersonalAccount.Utils;
+using PersonalAccount.ViewModels;
 
 namespace PersonalAccount.Controllers;
 
