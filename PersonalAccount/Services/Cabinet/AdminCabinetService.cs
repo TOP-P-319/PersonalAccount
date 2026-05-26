@@ -4,12 +4,17 @@ using PersonalAccount.Types;
 
 namespace PersonalAccount.Services.Cabinet;
 
-public class AdminCabinetService(IAccountRepo accountRepo, IStudentProfileRepo studentProfileRepo)
-    : IAdminCabinetService
+public class AdminCabinetService(
+    IAccountRepo accountRepo,
+    IStudentProfileRepo studentProfileRepo,
+    IGroupRepo groupRepo
+) : IAdminCabinetService
 {
-    public async Task<List<AccountModel>> GetAllStudentAccounts() =>
+    public async Task<List<AccountModel>> GetAllStudentAccountsAsync() =>
         await accountRepo.GetAllByRole(AccountRoles.Student);
 
-    public async Task<List<StudentProfileModel>> GetAllStudentProfiles() =>
+    public async Task<List<StudentProfileModel>> GetAllStudentProfilesAsync() => 
         await studentProfileRepo.GetAllAsync();
+
+    public async Task<List<GroupModel>> GetAllGroupsAsync() => await groupRepo.GetAllAsync();
 }

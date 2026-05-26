@@ -6,12 +6,41 @@ namespace PersonalAccount.Data;
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<AccountEntity> Accounts => Set<AccountEntity>();
+    public DbSet<GroupEntity> Groups => Set<GroupEntity>();
     public DbSet<StudentProfileEntity> StudentProfiles => Set<StudentProfileEntity>();
     public DbSet<ConfirmationTokenEntity> ConfirmationTokens => Set<ConfirmationTokenEntity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<GroupEntity>(entity =>
+        {
+            entity.ToTable("groups");
+            entity.HasKey(group => group.Id);
+
+            entity.Property(group => group.Id)
+                .HasColumnName("id")
+                .ValueGeneratedOnAdd();
+
+            entity.Property(group => group.Name)
+                .HasColumnName("name")
+                .HasMaxLength(255)
+                .IsRequired();
+
+            entity.Property(group => group.Description)
+                .HasColumnName("description")
+                .HasMaxLength(2047)
+                .IsRequired();
+
+            entity.Property(group => group.ImageUrl)
+                .HasColumnName("photo_url")
+                .HasMaxLength(2047);
+            
+            entity.HasMany(group => group.StudentProfiles)
+                .WithOne(student => student.Group)
+                .HasForeignKey(student => student.GroupId)
+                .OnDelete(DeleteBehavior.SetNull);
+        });
         modelBuilder.Entity<AccountEntity>(entity =>
         {
             entity.ToTable("accounts");
@@ -37,7 +66,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         });
         modelBuilder.Entity<StudentProfileEntity>(entity =>
         {
-            entity.ToTable("students");
+            entity.ToTable("student_profiles");
             entity.HasKey(student => student.ProfileId);
             entity.HasIndex(student => student.AccountId).IsUnique();
 
@@ -54,10 +83,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .HasMaxLength(255)
                 .IsRequired();
 
-            entity.Property(student => student.GroupName)
-                .HasColumnName("group_name")
-                .HasMaxLength(255)
-                .IsRequired();
+            entity.Property(student => student.GroupId)
+                .HasColumnName("group_id");
 
             entity.Property(student => student.PhotoUrl)
                 .HasColumnName("photo_url")

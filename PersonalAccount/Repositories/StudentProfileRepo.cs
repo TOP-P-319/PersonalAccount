@@ -23,6 +23,7 @@ public class StudentProfileRepo(
 
     public async Task<List<StudentProfileModel>> GetAllAsync() =>
         await StudentProfiles
+            .AsNoTracking()
             .Select(entity => mapper.ToModel(entity))
             .ToListAsync();
 }

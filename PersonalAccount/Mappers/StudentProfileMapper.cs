@@ -12,7 +12,7 @@ public class StudentProfileMapper : IMapper<StudentProfileEntity, StudentProfile
         AccountId = model.AccountId,
         FullName = model.FullName,
         PhotoUrl = model.PhotoUrl?.ToString(),
-        GroupName =  model.GroupName
+        GroupId =  model.GroupId
     };
 
     public StudentProfileModel ToModel(StudentProfileEntity entity) => new()
@@ -21,6 +21,6 @@ public class StudentProfileMapper : IMapper<StudentProfileEntity, StudentProfile
         AccountId = entity.AccountId,
         FullName = entity.FullName,
         PhotoUrl = entity.PhotoUrl?.ToUri(),
-        GroupName =  entity.GroupName
+        GroupId =  entity.GroupId
     };
 }
