@@ -1,8 +1,7 @@
 ﻿namespace PersonalAccount.Data.Entities;
 
-public class GroupEntity
+public class GroupEntity : Entity
 {
-    public int Id { get; set; }
     public List<StudentProfileEntity> StudentProfiles { get; set; } = [];
 
     public string Name { get; set; } = string.Empty;

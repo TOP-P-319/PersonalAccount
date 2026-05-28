@@ -1,6 +1,6 @@
 ﻿namespace PersonalAccount.ViewModels;
 
-public class StudentCabinetViewModel
+public class StudentCabinetViewModel : ViewModel
 {
     public string? PhotoUrl  { get; set; }
     public string FullName { get; set; } = string.Empty;

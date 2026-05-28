@@ -9,7 +9,7 @@ public class StudentProfileMapper : IMapper<StudentProfileEntity, StudentProfile
 {
     public StudentProfileEntity ToEntity(StudentProfileModel model) => new()
     {
-        ProfileId = model.ProfileId,
+        Id = model.Id,
         AccountId = model.AccountId,
         FullName = model.FullName,
         PhotoUrl = model.PhotoUrl?.ToString(),
@@ -18,7 +18,7 @@ public class StudentProfileMapper : IMapper<StudentProfileEntity, StudentProfile
 
     public StudentProfileModel ToModel(StudentProfileEntity entity) => new()
     {
-        ProfileId = entity.ProfileId,
+        Id = entity.Id,
         AccountId = entity.AccountId,
         FullName = entity.FullName,
         PhotoUrl = entity.PhotoUrl?.ToUri(),

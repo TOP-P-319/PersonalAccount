@@ -1,9 +1,7 @@
 ﻿namespace PersonalAccount.Models;
 
-public class GroupModel
+public class GroupModel : Model
 {
-    public int Id { get; set; }
-
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public Uri? ImageUrl { get; set; }

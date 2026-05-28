@@ -67,10 +67,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<StudentProfileEntity>(entity =>
         {
             entity.ToTable("student_profiles");
-            entity.HasKey(student => student.ProfileId);
+            entity.HasKey(student => student.Id);
             entity.HasIndex(student => student.AccountId).IsUnique();
 
-            entity.Property(student => student.ProfileId)
+            entity.Property(student => student.Id)
                 .HasColumnName("profile_id")
                 .ValueGeneratedOnAdd();
 

@@ -2,9 +2,8 @@
 
 namespace PersonalAccount.Models;
 
-public class StudentProfileModel
+public class StudentProfileModel : Model
 {
-    public int ProfileId { get; set; }
     public int AccountId { get; set; }
     public int GroupId { get; set; } = GroupConstants.NoGroup.Id;
     

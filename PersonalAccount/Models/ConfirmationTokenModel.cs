@@ -1,8 +1,7 @@
 ﻿namespace PersonalAccount.Models;
 
-public class ConfirmationTokenModel
+public class ConfirmationTokenModel : Model
 {
-    public int Id { get; set; }
     public int AccountId { get; set; }
     
     public string TokenHash { get; set; } =  string.Empty;

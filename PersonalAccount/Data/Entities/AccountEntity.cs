@@ -2,9 +2,8 @@
 
 namespace PersonalAccount.Data.Entities;
 
-public class AccountEntity
+public class AccountEntity :  Entity
 {
-    public int Id { get; set; }
     public StudentProfileEntity? StudentProfile { get; set; }
     public List<ConfirmationTokenEntity> ConfirmationTokens { get; set; } = [];
 

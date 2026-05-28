@@ -1,8 +1,7 @@
 ﻿namespace PersonalAccount.Data.Entities;
 
-public class StudentProfileEntity
+public class StudentProfileEntity : Entity
 {
-    public int ProfileId { get; set; }
     public int AccountId { get; set; }
     public AccountEntity? Account { get; set; }
 

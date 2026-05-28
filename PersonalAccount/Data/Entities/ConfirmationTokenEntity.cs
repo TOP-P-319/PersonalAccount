@@ -1,8 +1,7 @@
 ﻿namespace PersonalAccount.Data.Entities;
 
-public class ConfirmationTokenEntity
+public class ConfirmationTokenEntity : Entity
 {
-    public int Id { get; set; }
     public int AccountId { get; set; }
     public AccountEntity? Account { get; set; }
     
