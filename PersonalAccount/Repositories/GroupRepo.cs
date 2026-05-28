@@ -21,4 +21,10 @@ public class GroupRepo(AppDbContext ctx, IMapper<GroupEntity, GroupModel> mapper
         var entity = await Groups.FindAsync(groupId);
         return entity == null ? null : mapper.ToModel(entity);
     }
+
+    public async Task AddAsync(GroupModel group)
+    {
+        await Groups.AddAsync(mapper.ToEntity(group));
+        await ctx.SaveChangesAsync();
+    }
 }

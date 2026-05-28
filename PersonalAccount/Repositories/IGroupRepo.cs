@@ -6,4 +6,5 @@ public interface IGroupRepo
 {
     Task<List<GroupModel>> GetAllAsync();
     Task<GroupModel?> GetByIdAsync(int groupId);
+    Task AddAsync(GroupModel group);
 }

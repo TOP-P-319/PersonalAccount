@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PersonalAccount.Constants;
 using PersonalAccount.Services.Cabinet;
 using PersonalAccount.Types;
 using PersonalAccount.ViewModels;
@@ -23,9 +24,7 @@ public class AdminCabinetController(IAdminCabinetService cabinetService) : Contr
             Students = studentProfiles.Select(studentProfile => new AdminCabinetStudentViewModel
             {
                 FullName = studentProfile.FullName,
-                GroupName = studentProfile.GroupId == null
-                    ? "Без группы"
-                    : groups[studentProfile.GroupId.Value].Name,
+                GroupName = groups[studentProfile.GroupId].Name,
                 PhotoUrl = studentProfile.PhotoUrl?.ToString(),
                 Email = accounts[studentProfile.AccountId].Email
             }).ToList()
