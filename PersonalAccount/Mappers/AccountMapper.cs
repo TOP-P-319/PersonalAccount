@@ -3,23 +3,23 @@ using PersonalAccount.Models;
 
 namespace PersonalAccount.Mappers;
 
-public class AccountMapper : IMapper<AccountEntity, AccountModel>
+public class AccountMapper : Mapper<AccountEntity, AccountModel>
 {
-    public AccountEntity ToEntity(AccountModel model) => new()
+    public override AccountEntity ToEntity(AccountModel model)
     {
-        Id = model.Id,
+        var entity = base.ToEntity(model);
+        entity.Email = model.Email;
+        entity.PasswordHash = model.PasswordHash;
+        entity.Role = model.Role;
+        return entity;
+    }
 
-        Role = model.Role,
-        Email = model.Email,
-        PasswordHash = model.PasswordHash,
-    };
-
-    public AccountModel ToModel(AccountEntity entity) => new()
+    public override AccountModel ToModel(AccountEntity entity)
     {
-        Id = entity.Id,
-
-        Role = entity.Role,
-        Email = entity.Email,
-        PasswordHash = entity.PasswordHash,
-    };
+        var model = base.ToModel(entity);
+        model.Email = entity.Email;
+        model.PasswordHash = entity.PasswordHash;
+        model.Role = entity.Role;
+        return model;
+    }
 }

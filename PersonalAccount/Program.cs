@@ -44,14 +44,20 @@ if (builder.Environment.IsDevelopment())
 // Repositories
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 builder.Services.AddScoped<IStudentProfileRepo, StudentProfileRepo>();
+builder.Services.AddScoped<ITeacherProfileRepo, TeacherProfileRepo>();
+builder.Services.AddScoped<ISubjectRepo, SubjectRepo>();
+builder.Services.AddScoped<ITeacherGroupSubjectRepo, TeacherGroupSubjectRepo>();
 builder.Services.AddScoped<IConfirmationTokenRepo, ConfirmationTokenRepo>();
 builder.Services.AddScoped<IGroupRepo, GroupRepo>();
 
 // Mappers
 builder.Services.AddSingleton<IMapper<AccountEntity, AccountModel>, AccountMapper>();
 builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentProfileModel>, StudentProfileMapper>();
+builder.Services.AddSingleton<IMapper<TeacherProfileEntity, TeacherProfileModel>, TeacherProfileMapper>();
 builder.Services.AddSingleton<IMapper<ConfirmationTokenEntity, ConfirmationTokenModel>, ConfirmationTokenMapper>();
 builder.Services.AddSingleton<IMapper<GroupEntity, GroupModel>, GroupMapper>();
+builder.Services.AddSingleton<IMapper<SubjectEntity, SubjectModel>, SubjectMapper>();
+builder.Services.AddSingleton<IMapper<TeacherGroupSubjetEntity, TeacherGroupSubjectModel>, TeacherGroupSubjectMapper>();
 
 // Others
 builder.Services.AddSingleton<IPasswordHasher<AccountModel>, PasswordHasher<AccountModel>>();

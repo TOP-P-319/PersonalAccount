@@ -2,7 +2,7 @@
 
 namespace PersonalAccount.ViewModels;
 
-public class LoginViewModel
+public class LoginViewModel : ViewModel
 {
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress]

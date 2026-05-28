@@ -1,7 +1,9 @@
-﻿namespace PersonalAccount.Repositories;
+﻿using PersonalAccount.Models;
 
-public interface IProfileRepo<TProfileModel>
+namespace PersonalAccount.Repositories;
+
+public interface IProfileRepo<TProfileModel> : IRepo<TProfileModel>
+    where TProfileModel : Model, new()
 {
     Task<TProfileModel?> GetByAccountIdAsync(int accountId);
-    Task<List<TProfileModel>> GetAllAsync();
 }

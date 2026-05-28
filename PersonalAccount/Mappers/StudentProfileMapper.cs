@@ -1,26 +1,22 @@
-﻿using PersonalAccount.Data.Entities;
+﻿using PersonalAccount.Constants;
+using PersonalAccount.Data.Entities;
 using PersonalAccount.Models;
-using PersonalAccount.Utils;
 
 namespace PersonalAccount.Mappers;
 
-public class StudentProfileMapper : IMapper<StudentProfileEntity, StudentProfileModel>
+public class StudentProfileMapper : ProfileMapper<StudentProfileEntity, StudentProfileModel>
 {
-    public StudentProfileEntity ToEntity(StudentProfileModel model) => new()
+    public override StudentProfileEntity ToEntity(StudentProfileModel model)
     {
-        ProfileId = model.ProfileId,
-        AccountId = model.AccountId,
-        FullName = model.FullName,
-        PhotoUrl = model.PhotoUrl?.ToString(),
-        GroupId =  model.GroupId
-    };
+        var entity = base.ToEntity(model);
+        entity.GroupId = model.GroupId == GroupConstants.NoGroup.Id ? null : model.GroupId;
+        return entity;
+    }
 
-    public StudentProfileModel ToModel(StudentProfileEntity entity) => new()
+    public override StudentProfileModel ToModel(StudentProfileEntity entity)
     {
-        ProfileId = entity.ProfileId,
-        AccountId = entity.AccountId,
-        FullName = entity.FullName,
-        PhotoUrl = entity.PhotoUrl?.ToUri(),
-        GroupId =  entity.GroupId
-    };
+        var model = base.ToModel(entity);
+        model.GroupId = entity.GroupId ?? GroupConstants.NoGroup.Id;
+        return model;
+    }
 }
