@@ -11,7 +11,7 @@ public class AdminCabinetService(
 ) : IAdminCabinetService
 {
     public async Task<List<AccountModel>> GetAllStudentAccountsAsync() =>
-        await accountRepo.GetAllByRole(AccountRoles.Student);
+        await accountRepo.GetAllByRoleAsync(AccountRoles.Student);
 
     public async Task<List<StudentProfileModel>> GetAllStudentProfilesAsync() => 
         await studentProfileRepo.GetAllAsync();

@@ -9,21 +9,9 @@ namespace PersonalAccount.Repositories;
 public class StudentProfileRepo(
     AppDbContext ctx,
     IMapper<StudentProfileEntity, StudentProfileModel> mapper
-) : IStudentProfileRepo
+) : Repo<StudentProfileEntity, StudentProfileModel>(ctx, mapper, c => c.StudentProfiles),
+    IStudentProfileRepo
 {
-    private DbSet<StudentProfileEntity> StudentProfiles => ctx.StudentProfiles;
-
-    public async Task<StudentProfileModel?> GetByAccountIdAsync(int accountId)
-    {
-        var entity = await StudentProfiles
-            .AsNoTracking()
-            .FirstOrDefaultAsync(entity => entity.AccountId == accountId);
-        return entity == null ? null : mapper.ToModel(entity);
-    }
-
-    public async Task<List<StudentProfileModel>> GetAllAsync() =>
-        await StudentProfiles
-            .AsNoTracking()
-            .Select(entity => mapper.ToModel(entity))
-            .ToListAsync();
+    public async Task<StudentProfileModel?> GetByAccountIdAsync(int accountId) =>
+        await GetByAsync(entity => entity.AccountId == accountId);
 }
