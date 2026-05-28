@@ -19,7 +19,11 @@ public abstract class Repo<TEntity, TModel>(
     protected AppDbContext Ctx => ctx;
     protected IMapper<TEntity, TModel> Mapper => mapper;
 
-    public async Task AddAsync(TModel model) => await Table.AddAsync(Mapper.ToEntity(model));
+    public async Task AddAsync(TModel model)
+    {
+        await Table.AddAsync(Mapper.ToEntity(model));
+        await Ctx.SaveChangesAsync();
+    }
 
     public async Task<TModel?> GetByIdAsync(int id)
     {

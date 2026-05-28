@@ -4,12 +4,12 @@
     <header>
         <h1 class="text-start">Панель администратора</h1>
     </header>
-    <div class="container w-100 d-flex flex-wrap gap-4">
+    <div class="container w-100 d-flex flex-wrap flex-fill gap-4">
         @foreach (var student in Model.Students)
         {
-            <div class="card" style="width: 400px">
+            <div class="card" style="width: 200px">
                 <div class="card-img-top"
-                     style="background-image: url(@student.PhotoUrl); background-size: cover; height: 300px">
+                     style="background-image: url(@student.PhotoUrl); background-size: cover; height: 100px">
 
                 </div>
                 <header class="card-header">
@@ -24,5 +24,8 @@
                 </main>
             </div>
         }
+        <form method="get" asp-action="RegisterStudent">
+            <button class="btn btn-outline-primary w-100 h-100" type="submit">Добавить студента</button>
+        </form>
     </div>
 </div>

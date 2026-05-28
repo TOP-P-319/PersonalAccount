@@ -1,0 +1,39 @@
+﻿@model RegisterStudentViewModel
+
+@{
+    ViewData["Title"] = "Регистрация студента";
+}
+
+<div class="container d-flex align-content-center justify-content-center">
+    <div class="card w-50">
+        <header class="card-header">
+            <h1 class="text-center">
+                Регистрация нового студента
+            </h1>
+        </header>
+        <form class="card-body" method="post" asp-controller="AdminCabinet" asp-action="RegisterStudent">
+          
+            <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+            
+            <div class="mb-3">
+                <label class="form-label" asp-for="FullName"></label>
+                <input class="form-control" asp-for="FullName"/>
+                <span class="text-danger small" asp-validation-for="FullName"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" asp-for="Email"></label>
+                <input class="form-control" asp-for="Email" autocomplete="off"/>
+                <span class="text-danger small" asp-validation-for="Email"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" asp-for="ContactEmail"></label>
+                <input class="form-control" asp-for="ContactEmail" autocomplete="off"/>
+                <span class="text-danger small" asp-validation-for="ContactEmail"></span>
+            </div>
+            
+            <button class="btn btn-primary w-100"  type="submit">Зарегистрировать</button>
+        </form>
+    </div>
+</div>
