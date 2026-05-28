@@ -3,25 +3,25 @@ using PersonalAccount.Models;
 
 namespace PersonalAccount.Mappers;
 
-public class ConfirmationTokenMapper : IMapper<ConfirmationTokenEntity, ConfirmationTokenModel>
+public class ConfirmationTokenMapper : Mapper<ConfirmationTokenEntity, ConfirmationTokenModel>
 {
-    public ConfirmationTokenEntity ToEntity(ConfirmationTokenModel model) => new()
+    public override ConfirmationTokenEntity ToEntity(ConfirmationTokenModel model)
     {
-        Id = model.Id,
-        AccountId = model.AccountId,
+        var entity = base.ToEntity(model);
+        entity.AccountId = model.AccountId;
+        entity.TokenHash = model.TokenHash;
+        entity.ConfirmedAt = model.ConfirmedAt;
+        entity.ExpiresAt = model.ExpiresAt;
+        return entity;
+    }
 
-        TokenHash = model.TokenHash,
-        ConfirmedAt = model.ConfirmedAt,
-        ExpiresAt = model.ExpiresAt
-    };
-
-    public ConfirmationTokenModel ToModel(ConfirmationTokenEntity entity) => new()
+    public override ConfirmationTokenModel ToModel(ConfirmationTokenEntity entity)
     {
-        Id = entity.Id,
-        AccountId = entity.AccountId,
-
-        TokenHash = entity.TokenHash,
-        ConfirmedAt = entity.ConfirmedAt,
-        ExpiresAt = entity.ExpiresAt
-    };
+        var model = base.ToModel(entity);
+        model.AccountId = entity.AccountId;
+        model.TokenHash = entity.TokenHash;
+        model.ConfirmedAt = entity.ConfirmedAt;
+        model.ExpiresAt = entity.ExpiresAt;
+        return model;
+    }
 }
