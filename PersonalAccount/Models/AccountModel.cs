@@ -4,8 +4,11 @@ namespace PersonalAccount.Models;
 
 public class AccountModel : Model
 {
-
     public AccountRoles Role { get; set; }
     public string PasswordHash { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+
+    public override bool Equals(object? obj) =>
+        obj is AccountModel 
+        && base.Equals(obj);
 }

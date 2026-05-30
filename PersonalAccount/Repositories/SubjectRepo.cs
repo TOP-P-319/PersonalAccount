@@ -5,8 +5,8 @@ using PersonalAccount.Models;
 
 namespace PersonalAccount.Repositories;
 
-public class SubjectRepo(
+public class DisciplineRepo(
     AppDbContext ctx,
-    IMapper<SubjectEntity, SubjectModel> mapper
-) : Repo<SubjectEntity, SubjectModel>(ctx, mapper, c => c.Subjects),
-    ISubjectRepo;
+    IMapper<DisciplineEntity, DisciplineModel> mapper
+) : Repo<DisciplineEntity, DisciplineModel>(ctx, mapper, c => c.Disciplines),
+    IDisciplineRepo;

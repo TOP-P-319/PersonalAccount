@@ -2,7 +2,7 @@
 
 namespace PersonalAccount.Services.Cabinet;
 
-public interface IAdminCabinetService
+public interface IAdminPanelService
 {
     Task<List<AccountModel>> GetAllStudentAccountsAsync();
     Task<List<StudentProfileModel>> GetAllStudentProfilesAsync();

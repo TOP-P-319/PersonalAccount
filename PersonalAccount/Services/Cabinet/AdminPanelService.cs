@@ -6,12 +6,12 @@ using PersonalAccount.Types;
 
 namespace PersonalAccount.Services.Cabinet;
 
-public class AdminCabinetService(
+public class AdminPanelService(
     IAccountRepo accountRepo,
     IStudentProfileRepo studentProfileRepo,
     IGroupRepo groupRepo,
     IPasswordHasher<AccountModel> hasher
-) : IAdminCabinetService
+) : IAdminPanelService
 {
     public async Task<List<AccountModel>> GetAllStudentAccountsAsync() =>
         await accountRepo.GetAllByRoleAsync(AccountRoles.Student);

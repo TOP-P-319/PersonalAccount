@@ -2,5 +2,7 @@
 
 namespace PersonalAccount.Repositories;
 
-public interface ITeacherGroupSubjectRepo : IRepo<TeacherGroupSubjectModel>;
-
+public interface ITeacherGroupDisciplineRepo : IRepo<TeacherGroupDisciplineModel>
+{
+    Task<List<TeacherGroupDisciplineModel>> GetAllByTeacherAccountIdAsync(int teacherAccountId);
+}

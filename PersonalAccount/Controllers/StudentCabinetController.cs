@@ -12,7 +12,8 @@ namespace PersonalAccount.Controllers;
 [Authorize(Roles = AccountRoleConstants.Student)]
 public class StudentCabinetController(
     IStudentCabinetService cabinetService,
-    IConfirmationTokenService confirmationTokenService) : Controller
+    IConfirmationTokenService confirmationTokenService
+    ) : Controller
 {
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -21,18 +22,18 @@ public class StudentCabinetController(
         var accountEmail = User.GetEmail();
         if (accountId == null || accountEmail == null) return Forbid();
 
-        var student = await cabinetService.GetByAccountIdAsync(accountId.Value);
-        if (student == null) return RedirectToAction("Error", "Home");
-        var confirmed = await confirmationTokenService.HasConfirmedTokenAsync(student.AccountId);
-        var group = await cabinetService.GetGroupByIdAsync(student.GroupId);
+        var studentProfile = await cabinetService.GetProfileAsync(accountId.Value);
+        if (studentProfile == null) return RedirectToAction("Error", "Home");
+        var confirmed = await confirmationTokenService.HasConfirmedTokenAsync(studentProfile.AccountId);
+        var group = await cabinetService.GetGroupAsync(studentProfile.GroupId);
         if (group == null) return RedirectToAction("Error", "Home");
 
         return View(new StudentCabinetViewModel
         {
-            FullName = student.FullName,
+            FullName = studentProfile.FullName,
             Email = accountEmail,
             GroupName = group.Name,
-            PhotoUrl = student.PhotoUrl?.ToString(),
+            PhotoUrl = studentProfile.PhotoUrl?.ToString(),
             IsEmailConfirmed = confirmed
         });
     }

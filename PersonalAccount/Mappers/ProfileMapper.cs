@@ -4,7 +4,7 @@ using PersonalAccount.Utils;
 
 namespace PersonalAccount.Mappers;
 
-public class ProfileMapper<TProfileEntity, TProfileModel> : Mapper<TProfileEntity, TProfileModel>
+public abstract class ProfileMapper<TProfileEntity, TProfileModel> : Mapper<TProfileEntity, TProfileModel>
     where TProfileEntity : ProfileEntity, new()
     where TProfileModel : ProfileModel, new()
 {

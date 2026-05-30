@@ -5,8 +5,12 @@ using PersonalAccount.Models;
 
 namespace PersonalAccount.Repositories;
 
-public class TeacherGroupSubjectRepo(
+public class TeacherGroupDisciplineRepo(
     AppDbContext ctx,
-    IMapper<TeacherGroupSubjetEntity, TeacherGroupSubjectModel> mapper
-) : Repo<TeacherGroupSubjetEntity, TeacherGroupSubjectModel>(ctx, mapper, c => c.TeacherGroupSubjets),
-    ITeacherGroupSubjectRepo;
+    IMapper<TeacherGroupDisciplineEntity, TeacherGroupDisciplineModel> mapper
+) : Repo<TeacherGroupDisciplineEntity, TeacherGroupDisciplineModel>(ctx, mapper, c => c.TeacherGroupSubjets),
+    ITeacherGroupDisciplineRepo
+{
+    public async Task<List<TeacherGroupDisciplineModel>> GetAllByTeacherAccountIdAsync(int teacherAccountId)
+        => await GetAllByAsync(entity => entity.TeacherAccountId == teacherAccountId);
+}

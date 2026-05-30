@@ -37,7 +37,8 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ISmtpClientService, SmtpClientService>();
 builder.Services.AddScoped<IConfirmationTokenService, ConfirmationTokenService>();
 builder.Services.AddScoped<IStudentCabinetService, StudentCabinetService>();
-builder.Services.AddScoped<IAdminCabinetService, AdminCabinetService>();
+builder.Services.AddScoped<ITeacherCabinetService, TeacherCabinetService>();
+builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
 if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<DbBootstrapService>();
 
@@ -45,8 +46,8 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 builder.Services.AddScoped<IStudentProfileRepo, StudentProfileRepo>();
 builder.Services.AddScoped<ITeacherProfileRepo, TeacherProfileRepo>();
-builder.Services.AddScoped<ISubjectRepo, SubjectRepo>();
-builder.Services.AddScoped<ITeacherGroupSubjectRepo, TeacherGroupSubjectRepo>();
+builder.Services.AddScoped<IDisciplineRepo, DisciplineRepo>();
+builder.Services.AddScoped<ITeacherGroupDisciplineRepo, TeacherGroupDisciplineRepo>();
 builder.Services.AddScoped<IConfirmationTokenRepo, ConfirmationTokenRepo>();
 builder.Services.AddScoped<IGroupRepo, GroupRepo>();
 
@@ -56,8 +57,8 @@ builder.Services.AddSingleton<IMapper<StudentProfileEntity, StudentProfileModel>
 builder.Services.AddSingleton<IMapper<TeacherProfileEntity, TeacherProfileModel>, TeacherProfileMapper>();
 builder.Services.AddSingleton<IMapper<ConfirmationTokenEntity, ConfirmationTokenModel>, ConfirmationTokenMapper>();
 builder.Services.AddSingleton<IMapper<GroupEntity, GroupModel>, GroupMapper>();
-builder.Services.AddSingleton<IMapper<SubjectEntity, SubjectModel>, SubjectMapper>();
-builder.Services.AddSingleton<IMapper<TeacherGroupSubjetEntity, TeacherGroupSubjectModel>, TeacherGroupSubjectMapper>();
+builder.Services.AddSingleton<IMapper<DisciplineEntity, DisciplineModel>, DisciplineMapper>();
+builder.Services.AddSingleton<IMapper<TeacherGroupDisciplineEntity, TeacherGroupDisciplineModel>, TeacherGroupDisciplineMapper>();
 
 // Others
 builder.Services.AddSingleton<IPasswordHasher<AccountModel>, PasswordHasher<AccountModel>>();

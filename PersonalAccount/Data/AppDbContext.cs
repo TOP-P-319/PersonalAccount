@@ -10,8 +10,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<ConfirmationTokenEntity> ConfirmationTokens => Set<ConfirmationTokenEntity>();
 
     public DbSet<GroupEntity> Groups => Set<GroupEntity>();
-    public DbSet<SubjectEntity> Subjects => Set<SubjectEntity>();
-    public DbSet<TeacherGroupSubjetEntity> TeacherGroupSubjets => Set<TeacherGroupSubjetEntity>();
+    public DbSet<DisciplineEntity> Disciplines => Set<DisciplineEntity>();
+    public DbSet<TeacherGroupDisciplineEntity> TeacherGroupSubjets => Set<TeacherGroupDisciplineEntity>();
 
     public DbSet<StudentProfileEntity> StudentProfiles => Set<StudentProfileEntity>();
     public DbSet<TeacherProfileEntity> TeacherProfiles => Set<TeacherProfileEntity>();
@@ -33,29 +33,25 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             entity.Property(group => group.Description)
                 .HasColumnName("description")
                 .HasMaxLength(2047)
+                .HasDefaultValue(string.Empty)
                 .IsRequired();
 
             entity.Property(group => group.ImageUrl)
-                .HasColumnName("photo_url")
+                .HasColumnName("image_url")
                 .HasMaxLength(2047);
-
-            entity.HasMany(group => group.StudentProfiles)
-                .WithOne(student => student.Group)
-                .HasForeignKey(student => student.GroupId)
-                .OnDelete(DeleteBehavior.SetNull);
         });
 
-        modelBuilder.Entity<SubjectEntity>(entity =>
+        modelBuilder.Entity<DisciplineEntity>(entity =>
         {
-            entity.BuildEntity("subjects");
+            entity.BuildEntity("disciplines");
 
-            entity.Property(subject => subject.Name)
+            entity.Property(discipline => discipline.Name)
                 .HasColumnName("name")
                 .HasMaxLength(255)
                 .IsRequired();
         });
 
-        modelBuilder.Entity<TeacherGroupSubjetEntity>(entity =>
+        modelBuilder.Entity<TeacherGroupDisciplineEntity>(entity =>
         {
             entity.BuildEntity("teacher_group_subjets");
 
@@ -63,8 +59,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .HasColumnName("group_id")
                 .IsRequired();
 
-            entity.Property(link => link.SubjectId)
-                .HasColumnName("subject_id")
+            entity.Property(link => link.DisciplineId)
+                .HasColumnName("discipline_id")
                 .IsRequired();
 
             entity.Property(link => link.TeacherAccountId)
@@ -76,9 +72,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .HasForeignKey(link => link.GroupId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            entity.HasOne(link => link.Subject)
-                .WithMany(subject => subject.TeacherGroupSubjets)
-                .HasForeignKey(link => link.SubjectId)
+            entity.HasOne(link => link.Discipline)
+                .WithMany(discipline => discipline.TeacherGroupDisciplines)
+                .HasForeignKey(link => link.DisciplineId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(link => link.TeacherAccount)
@@ -112,6 +108,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
             entity.Property(student => student.GroupId)
                 .HasColumnName("group_id");
+
+            entity.HasOne(student => student.Group)
+                .WithMany(group => group.StudentProfiles)
+                .HasForeignKey(student => student.GroupId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<TeacherProfileEntity>(entity =>
