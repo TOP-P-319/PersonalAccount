@@ -7,7 +7,7 @@ public class AccountEntity :  Entity
     public StudentProfileEntity? StudentProfile { get; set; }
     public TeacherProfileEntity? TeacherProfile { get; set; }
     public List<ConfirmationTokenEntity> ConfirmationTokens { get; set; } = [];
-    public List<TeacherGroupSubjetEntity>  TeacherGroupSubjets { get; set; } = [];
+    public List<TeacherGroupDisciplineEntity>  TeacherGroupSubjets { get; set; } = [];
 
     public AccountRoles Role { get; set; }
     public string Email { get; set; } = string.Empty;

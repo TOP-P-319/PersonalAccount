@@ -3,16 +3,16 @@ using PersonalAccount.Models;
 
 namespace PersonalAccount.Mappers;
 
-public class SubjectMapper : Mapper<SubjectEntity, SubjectModel>
+public class DisciplineMapper : Mapper<DisciplineEntity, DisciplineModel>
 {
-    public override SubjectEntity ToEntity(SubjectModel model)
+    public override DisciplineEntity ToEntity(DisciplineModel model)
     {
         var entity = base.ToEntity(model);
         entity.Name = model.Name;
         return entity;
     }
 
-    public override SubjectModel ToModel(SubjectEntity entity)
+    public override DisciplineModel ToModel(DisciplineEntity entity)
     {
         var model = base.ToModel(entity);
         model.Name = entity.Name;

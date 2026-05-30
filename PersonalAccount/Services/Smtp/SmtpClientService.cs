@@ -9,8 +9,8 @@ public class SmtpClientService(IOptions<SmtpClientSettings> options) : ISmtpClie
 {
     private readonly SmtpClientSettings _clientSettings = options.Value;
 
-    public async Task SendEmailAsync(string to, string subject, string body) =>
-        await SendMessageAsync(CreateEmailMessage(to, subject, body));
+    public async Task SendEmailAsync(string to, string discipline, string body) =>
+        await SendMessageAsync(CreateEmailMessage(to, discipline, body));
 
     private async Task SendMessageAsync(MimeMessage message)
     {

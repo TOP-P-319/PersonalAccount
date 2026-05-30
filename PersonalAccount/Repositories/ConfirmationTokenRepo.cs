@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PersonalAccount.Data;
+﻿using PersonalAccount.Data;
 using PersonalAccount.Data.Entities;
 using PersonalAccount.Mappers;
 using PersonalAccount.Models;

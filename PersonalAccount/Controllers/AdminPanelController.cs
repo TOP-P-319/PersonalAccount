@@ -8,23 +8,23 @@ using PersonalAccount.ViewModels;
 namespace PersonalAccount.Controllers;
 
 [Authorize(Roles = AccountRoleConstants.Admin)]
-public class AdminCabinetController(
-    IAdminCabinetService cabinetService,
+public class AdminPanelController(
+    IAdminPanelService panelService,
     ISmtpClientService smtpClientService
 ) : Controller
 {
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var accounts = (await cabinetService.GetAllStudentAccountsAsync())
+        var accounts = (await panelService.GetAllStudentAccountsAsync())
             .ToDictionary(account => account.Id);
-        var groups = (await cabinetService.GetAllGroupsAsync())
+        var groups = (await panelService.GetAllGroupsAsync())
             .ToDictionary(group => group.Id);
-        var studentProfiles = await cabinetService.GetAllStudentProfilesAsync();
+        var studentProfiles = await panelService.GetAllStudentProfilesAsync();
 
-        return View(new AdminCabinetViewModel
+        return View(new AdminPanelViewModel
         {
-            Students = studentProfiles.Select(studentProfile => new AdminCabinetStudentViewModel
+            Students = studentProfiles.Select(studentProfile => new AdminPanelStudentViewModel
             {
                 FullName = studentProfile.FullName,
                 GroupName = groups[studentProfile.GroupId].Name,
@@ -43,15 +43,15 @@ public class AdminCabinetController(
     {
         if (!ModelState.IsValid) return View(model);
 
-        var isUnique = await cabinetService.CheckEmailUniqueAsync(model.Email);
+        var isUnique = await panelService.CheckEmailUniqueAsync(model.Email);
         if (!isUnique)
         {
             ModelState.AddModelError(string.Empty, $"Email {model.Email} is already taken.");
             return View(model);
         }
 
-        var password = await cabinetService.RegisterStudentAccountWithGeneratedPasswordAsync(model.Email);
-        await cabinetService.RegisterStudentProfileForEmailAsync(model.Email, model.FullName);
+        var password = await panelService.RegisterStudentAccountWithGeneratedPasswordAsync(model.Email);
+        await panelService.RegisterStudentProfileForEmailAsync(model.Email, model.FullName);
 
         await smtpClientService.SendEmailAsync(model.ContactEmail, "Данные для входа в систему", $"""
              <body>

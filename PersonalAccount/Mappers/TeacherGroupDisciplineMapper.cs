@@ -3,23 +3,23 @@ using PersonalAccount.Models;
 
 namespace PersonalAccount.Mappers;
 
-public class TeacherGroupSubjectMapper : Mapper<TeacherGroupSubjetEntity, TeacherGroupSubjectModel>
+public class TeacherGroupDisciplineMapper : Mapper<TeacherGroupDisciplineEntity, TeacherGroupDisciplineModel>
 {
-    public override TeacherGroupSubjetEntity ToEntity(TeacherGroupSubjectModel model)
+    public override TeacherGroupDisciplineEntity ToEntity(TeacherGroupDisciplineModel model)
     {
         var entity = base.ToEntity(model);
         entity.TeacherAccountId = model.TeacherAccountId;
         entity.GroupId = model.GroupId;
-        entity.SubjectId = model.SubjectId;
+        entity.DisciplineId = model.DisciplineId;
         return entity;
     }
 
-    public override TeacherGroupSubjectModel ToModel(TeacherGroupSubjetEntity entity)
+    public override TeacherGroupDisciplineModel ToModel(TeacherGroupDisciplineEntity entity)
     {
         var model = base.ToModel(entity);
         model.TeacherAccountId = entity.TeacherAccountId;
         model.GroupId = entity.GroupId;
-        model.SubjectId = entity.SubjectId;
+        model.DisciplineId = entity.DisciplineId;
         return model;
     }
 }

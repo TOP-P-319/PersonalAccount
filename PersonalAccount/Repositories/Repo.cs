@@ -55,12 +55,10 @@ public abstract class Repo<TEntity, TModel>(
             .Select(entity => Mapper.ToModel(entity))
             .ToListAsync();
 
-    protected async Task<bool> UpdateByIdAsync(int id, Action<TEntity> updateAction)
+    protected async Task UpdateByIdAsync(int id, Action<TEntity> updateAction)
     {
-        var entity = await Table.FindAsync(id);
-        if (entity == null) return false;
+        var entity = await Table.FindAsync(id) ?? throw new KeyNotFoundException();
         updateAction(entity);
         await Ctx.SaveChangesAsync();
-        return true;
     }
 }

@@ -1,12 +1,10 @@
 ﻿namespace PersonalAccount.Models;
 
-public class GroupModel : Model
+public class DisciplineModel : Model
 {
     public string Name { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    public Uri? ImageUrl { get; set; }
     
     public override bool Equals(object? obj) =>
-        obj is GroupModel 
+        obj is DisciplineModel 
         && base.Equals(obj);
 }

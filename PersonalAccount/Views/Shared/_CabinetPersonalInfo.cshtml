@@ -1,0 +1,33 @@
+﻿@model CabinetViewModel
+
+<div class="d-flex flex-column gap-2">
+    <header>
+        <h1 class="text-center">@Model.Title</h1>
+    </header>
+    <div class="card" style="max-width: 600px">
+        @if (Model.PhotoUrl != null)
+        {
+            <img class="card-img-top" src="@Model.PhotoUrl" alt="Student Photo"/>
+        }
+        <header class="card-header">
+            <h3 class="text-center">@Model.FullName</h3>
+        </header>
+
+        <main class="card-body">
+            @Model.AdditionalInfoBody
+            <div class="d-flex gap-2">
+                <span class="text-start text-primary nav-link" href="@Model.Email">@Model.Email</span>
+                @if (Model.IsEmailConfirmed)
+                {
+                    <span class="nav-link text-success fst-italic">Почта подтверждена</span>
+                }
+                else
+                {
+                    <form method="post" asp-action="Send" asp-controller="EmailConfirmation">
+                        <button class="btn btn-link nav-link text-danger" type="submit">Подтвердить</button>
+                    </form>
+                }
+            </div>
+        </main>
+    </div>
+</div>
